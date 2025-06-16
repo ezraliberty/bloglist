@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const { Op } = require("sequelize");
-const { User, Blog, ReadingList } = require("../models");
+const { User, Blog } = require("../models");
 
 router.get("/", async (req, res) => {
   const users = await User.findAll({
@@ -55,46 +55,6 @@ router.get("/:id", async (req, res) => {
     res.status(404).end();
   }
 });
-
-// router.get("/:id", async (req, res) => {
-//   const user = await User.findByPk(req.params.id, {
-//     include: [
-//       {
-//         model: Blog,
-//         as: "readings",
-//         attributes: ['id', 'author', 'url', 'likes', 'title', 'year'],
-//         include: {
-//           model: ReadingList,
-//           as: 'users_list',
-//           attributes: ['id', 'is_read']
-//         }
-//       },
-//     ],
-//   });
-//   // console.log('user', user)
-//   if (user) {
-//     res.json(user);
-//   } else {
-//     res.status(404).end();
-//   }
-// });
-
-// router.get("/:id", async (req, res) => {
-//   const user = await User.findByPk(req.params.id, {
-//     include: [
-//       {
-//         model: Blog,
-//         as: "readings",
-//       },
-//     ],
-//   });
-//   console.log('user', user)
-//   if (user) {
-//     res.json(user);
-//   } else {
-//     res.status(404).end();
-//   }
-// });
 
 router.put("/:username", async (req, res) => {
   const user = await User.findOne({ where: { username: req.params.username } });
